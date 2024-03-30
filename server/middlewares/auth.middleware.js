@@ -1,0 +1,29 @@
+import jwt from "jsonwebtoken";
+
+const validateToken = async (req, res, next) => {
+    try {
+        const token = req.header("x-auth-token");
+
+        if (!token) {
+            return res.status(401).json({ msg: "No token, authorization denied" });
+        }
+
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+            req.user = decoded;
+            req.token = token;
+            console.log("Decoded token:", decoded);
+
+            next();
+        } catch (error) {
+            res.status(401).json({ msg: "Token is not valid", error: error.message });
+            console.log("Error verifying token:", error);
+        }
+    } catch (error) {
+        res.status(500).json({ msg: "Internal server error" });
+        console.log("Unexpected error:", error);
+    }
+}
+
+export default validateToken;
