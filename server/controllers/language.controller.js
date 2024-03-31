@@ -3,14 +3,14 @@ import Language from "../models/language.model.js";
 
 export const createALanguage = async (req, res) => {
     try{
-        const {name, code} = req.body;
+        const {name, code, image, description} = req.body;
 
         if (!name || !code) {
             res.status(400).send({ message: "Content can not be empty!" });
             return;
         }
 
-        const newLanguage = await Language.create({name, code});
+        const newLanguage = await Language.create({name, code, image, description});
         res.status(201).json(newLanguage);
         
     }catch(err){
@@ -21,7 +21,7 @@ export const createALanguage = async (req, res) => {
 export const getAllLanguages = async (req, res) => {
     try{
         const languages = await Language.find();
-        res.status(200).json({languages});
+        res.status(200).json(languages);
     }catch(err){
         res.status(500).json({ message: err.message });
     }

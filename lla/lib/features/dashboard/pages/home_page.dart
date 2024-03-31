@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lla/core/theme/app_pallete.dart';
 import 'package:lla/features/dashboard/pages/featured_screen.dart';
 import 'package:lla/services/auth_services.dart';
+import 'package:lla/services/language_services.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,6 +24,16 @@ class _HomePageState extends State<HomePage> {
 
   void signOut(BuildContext context) {
     AuthService().signOut(context);
+  }
+
+  final LanguageService languageService = LanguageService();
+
+  @override
+  void initState() {
+    super.initState();
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      languageService.getLanguages();
+    });
   }
 
   @override

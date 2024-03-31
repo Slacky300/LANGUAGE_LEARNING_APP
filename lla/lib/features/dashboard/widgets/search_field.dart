@@ -9,7 +9,9 @@ class SearchTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       decoration: InputDecoration(
+        
         prefixIcon: const Icon(
           Icons.search,
           color: Colors.grey,

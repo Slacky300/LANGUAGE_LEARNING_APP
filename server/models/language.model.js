@@ -13,6 +13,12 @@ const LanguageSchema = mongoose.Schema({
     course: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    image: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
 
 
 

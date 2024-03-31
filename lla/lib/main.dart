@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:lla/core/theme/theme.dart';
 import 'package:lla/features/auth/presentation/pages/signin_page.dart';
 import 'package:lla/features/dashboard/pages/home_page.dart';
+import 'package:lla/providers/language_provider.dart';
 import 'package:lla/providers/user_provider.dart';
 import 'package:lla/services/auth_services.dart';
 import 'package:provider/provider.dart';
-// import 'package:lla/features/auth/presentation/pages/signup_page.dart';
 
 void main() {
   runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ],
       child: const MyApp()));
 }
 
