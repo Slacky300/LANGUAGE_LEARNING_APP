@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lla/core/theme/app_pallete.dart';
+import 'package:lla/features/dashboard/pages/analytics_screen.dart';
 import 'package:lla/features/dashboard/pages/featured_screen.dart';
 import 'package:lla/services/auth_services.dart';
 import 'package:lla/services/language_services.dart';
@@ -55,12 +56,12 @@ class _HomePageState extends State<HomePage> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.book_outlined),
-            label: "Lessons",
+            icon: Icon(Icons.play_circle_fill_outlined),
+            label: "Continue",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined),
-            label: "Profile",
+            icon: Icon(Icons.analytics_outlined),
+            label: "Analytics",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.exit_to_app_outlined),
@@ -77,6 +78,18 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex = index;
             });
           }
+
+          if(index == 0){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+          }
+
+          if(index == 2){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AnalyticsScreen()));
+          }
+
+
+
+
         },
       ),
     );

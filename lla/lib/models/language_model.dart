@@ -6,12 +6,14 @@ class Language {
   final String code;
   final String description;
   final String image;
+  final String course;
 
   Language(
       {required this.name,
       required this.id,
       required this.code,
       required this.description,
+      required this.course,
       required this.image});
 
   Map<String, dynamic> toMap() {
@@ -19,6 +21,7 @@ class Language {
       'name': name,
       'id': id,
       'code': code,
+      'course': course,
       'description': description,
       'image': image
     };
@@ -31,6 +34,7 @@ class Language {
     code: json['code'] ?? '',
     description: json['description'] ?? '',
     image: json['image'] ?? '',
+    course: json['course'] ?? '',
   );
 }
 

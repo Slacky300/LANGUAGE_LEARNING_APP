@@ -20,8 +20,9 @@ export const createALesson = async (req, res) => {
 export const getCourseLessons = async (req, res) => {
     try{
         const {courseId} = req.params;
+        console.log('courseId: ', courseId)
         const lessons = await Lesson.find({course: courseId});
-        res.status(200).json({lessons});
+        res.status(200).json(lessons);
     }catch(err){
         res.status(500).json({ message: err.message });
     }

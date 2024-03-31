@@ -3,6 +3,7 @@ import 'package:lla/core/theme/theme.dart';
 import 'package:lla/features/auth/presentation/pages/signin_page.dart';
 import 'package:lla/features/dashboard/pages/home_page.dart';
 import 'package:lla/providers/language_provider.dart';
+import 'package:lla/providers/lesson_provider.dart';
 import 'package:lla/providers/user_provider.dart';
 import 'package:lla/services/auth_services.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => LessonProvider()),
         ],
       child: const MyApp()));
 }

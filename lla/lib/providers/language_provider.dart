@@ -15,6 +15,7 @@ class LanguageProvider extends ChangeNotifier{
   Future<void> getLanguagesFromService() async {
     final response = await _languageService.getLanguages();
     _languages = response;
+    notifyListeners();
   }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lla/core/theme/app_pallete.dart';
+import 'package:lla/features/dashboard/pages/lessons_screen.dart';
 import 'package:lla/features/dashboard/widgets/circle_button.dart';
 import 'package:lla/features/dashboard/widgets/search_field.dart';
 import 'package:lla/models/language_model.dart';
@@ -22,17 +23,12 @@ class _FeatureScreenState extends State<FeatureScreen> {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         body: Column(
-          children: [
-            AppBar(),
-            Body()
-          ],
+          children: [AppBar(), Body()],
         ),
       ),
     );
   }
 }
-
-
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -45,66 +41,71 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LanguageProvider>(context, listen: false).getLanguagesFromService();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<LanguageProvider>(context, listen: false)
+          .getLanguagesFromService();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final languageList = Provider.of<LanguageProvider>(context).languages;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Explore Languages",
-                style: TextStyle(
-                  color: AppPallete.textColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                )
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, _) {
+        final languageList = languageProvider.languages;
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Explore Languages",
+                    style: TextStyle(
+                      color: AppPallete.textColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "See All",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppPallete.primaryColor),
+                    ),
+                  )
+                ],
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "See All",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: AppPallete.primaryColor),
-                ),
-              )
-            ],
-          ),
-        ),
-        GridView.builder(
-          shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 8,
-          ),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.8,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 24,
-          ),
-          itemBuilder: (context, index) {
-            return LanguageCard(
-              language: languageList[index],
-            );
-          },
-          itemCount: languageList.length,
-        ),
-      ],
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 8,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 24,
+              ),
+              itemBuilder: (context, index) {
+                return LanguageCard(
+                  language: languageList[index],
+                );
+              },
+              itemCount: languageList.length,
+            ),
+          ],
+        );
+      },
     );
   }
 }
+
 class LanguageCard extends StatelessWidget {
   final Language language;
 
@@ -116,12 +117,14 @@ class LanguageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const CourseScreen(),
-      //   ),
-      // ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LessonScreen(
+            map: {'courseId': language.course, 'courseImage': language.image},
+          ),
+        ),
+      ),
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -171,8 +174,6 @@ class LanguageCard extends StatelessWidget {
   }
 }
 
-
-
 class AppBar extends StatelessWidget {
   const AppBar({
     super.key,
@@ -194,10 +195,7 @@ class AppBar extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           stops: [0.1, 0.5],
-          colors: [
-            AppPallete.primaryColor,
-            AppPallete.gradient4
-          ],
+          colors: [AppPallete.primaryColor, AppPallete.gradient4],
         ),
       ),
       child: Column(
@@ -225,5 +223,3 @@ class AppBar extends StatelessWidget {
     );
   }
 }
-
-

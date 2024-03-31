@@ -19,7 +19,8 @@ class LanguageService {
             name: e['name'],
             code: e['code'],
             description: e['description'],
-            image: e['image']
+            image: e['image'],
+            course: e['course']
           );
         }).toList();
         return languages;
